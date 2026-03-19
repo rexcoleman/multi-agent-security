@@ -21,3 +21,6 @@ echo "--- Generating figures ---"
 python scripts/make_figures.py
 
 echo "=== DONE: $(date) ==="
+
+echo "--- Gate Validation (R50) ---"
+bash ~/ml-governance-templates/scripts/check_all_gates.sh .
