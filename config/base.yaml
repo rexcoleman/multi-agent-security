@@ -1,0 +1,95 @@
+# FP-15 Multi-Agent Security — Base Configuration
+# All experiments read from this config. No hardcoded values in scripts.
+
+project:
+  name: "FP-15 Multi-Agent Security Testing Framework"
+  version: "0.1.0"
+
+seeds: [42, 123, 456, 789, 1024]
+
+# Agent system parameters
+agents:
+  types: ["llm", "rl", "rule_based"]
+  default_type: "llm"
+  # Probability that a non-compromised agent correctly processes a task
+  base_accuracy: 0.95
+  # Probability that a compromised agent produces poisoned output
+  compromise_potency: 0.90
+
+# Trust model configurations
+trust_models:
+  implicit:
+    description: "Accept all inputs from any agent without verification"
+    trust_weight: 1.0
+    verification_prob: 0.0
+  capability_scoped:
+    description: "Accept inputs only from agents with matching capability tags"
+    trust_weight: 0.8
+    verification_prob: 0.3
+  zero_trust:
+    description: "Independently verify every input regardless of source"
+    trust_weight: 0.5
+    verification_prob: 0.8
+
+# Network topologies
+topologies:
+  hierarchical:
+    description: "Tree structure with orchestrator at root (CrewAI pattern)"
+  flat:
+    description: "All-to-all communication, no designated leader"
+  star:
+    description: "Single hub agent, all others communicate through hub"
+
+# Experiment configurations
+experiments:
+  E1_cascade_vs_count:
+    agent_counts: [2, 3, 5, 7, 10]
+    trust_model: "implicit"
+    topology: "hierarchical"
+    compromised_agents: 1
+    time_steps: 20
+    description: "Cascade propagation rate vs number of agents"
+
+  E2_trust_model:
+    agent_count: 5
+    trust_models: ["implicit", "capability_scoped", "zero_trust"]
+    topology: "hierarchical"
+    compromised_agents: 1
+    time_steps: 20
+    description: "Compare trust architectures on cascade propagation"
+
+  E3_topology:
+    agent_count: 5
+    trust_model: "implicit"
+    topologies: ["hierarchical", "flat", "star"]
+    compromised_agents: 1
+    time_steps: 20
+    description: "Compare network topologies on cascade propagation"
+
+  E4_adaptive_adversary:
+    agent_count: 5
+    trust_model: "zero_trust"
+    topology: "hierarchical"
+    attacker_types: ["naive", "defense_aware", "credential_theft"]
+    time_steps: 20
+    description: "Adaptive adversary vs zero-trust defense"
+
+  E5_mixed_agents:
+    agent_count: 5
+    trust_model: "implicit"
+    topology: "hierarchical"
+    compositions:
+      all_llm: {llm: 5, rl: 0, rule_based: 0}
+      mixed_rl: {llm: 3, rl: 2, rule_based: 0}
+      mixed_rule: {llm: 3, rl: 0, rule_based: 2}
+      heterogeneous: {llm: 2, rl: 2, rule_based: 1}
+    time_steps: 20
+    description: "Cascade rate by agent type composition"
+
+  E6_memory_ablation:
+    agent_count: 5
+    trust_model: "implicit"
+    topology: "hierarchical"
+    memory_modes: ["shared", "partitioned", "isolated"]
+    time_steps: 20
+    description: "Impact of shared memory on cascade propagation"
