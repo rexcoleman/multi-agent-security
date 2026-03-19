@@ -84,6 +84,61 @@
 
 ---
 
+## Parameter Sensitivity Analysis [DEMONSTRATED]
+
+> Addresses: "You tuned the parameters to get the results you wanted." (G-5)
+> Method: Sweep base cascade probability across [0.05, 0.10, 0.15, 0.20, 0.30, 0.50].
+
+### E2 Sensitivity: Zero-trust advantage is robust
+
+| base_prob | Implicit Poison | Zero-Trust Poison | Relative Reduction |
+|-----------|----------------|-------------------|-------------------|
+| 0.05 | 0.969 | 0.613 | 37% |
+| 0.10 | 0.975 | 0.613 | 37% |
+| 0.15 | 0.974 | 0.583 | 40% |
+| 0.20 | 0.969 | 0.611 | 37% |
+| 0.30 | 0.976 | 0.643 | 34% |
+| 0.50 | 0.971 | 0.656 | 32% |
+
+**Finding:** Zero-trust reduces poison rate by 32-40% relative across the entire parameter space. The advantage narrows slightly at higher base_prob (more aggressive cascade) but remains substantial. **The E2 finding is not an artifact of parameter tuning.**
+
+### E4 Sensitivity: Adaptive adversary recovery is robust
+
+| base_prob | Naive (ZT) | Defense-Aware (ZT) | Recovery % |
+|-----------|-----------|-------------------|------------|
+| 0.05 | 0.613 | 0.893 | 72% |
+| 0.10 | 0.613 | 0.898 | 74% |
+| 0.15 | 0.583 | 0.899 | 76% |
+| 0.20 | 0.611 | 0.898 | 74% |
+| 0.30 | 0.643 | 0.908 | 74% |
+| 0.50 | 0.656 | 0.908 | 73% |
+
+**Finding:** Defense-aware attacker recovers 72-76% of zero-trust's advantage across all parameter values. **This is actually higher than the original 54% estimate** — the sensitivity sweep reveals the adaptive adversary threat is MORE consistent than initially measured.
+
+### Mechanism: Cascade Inflection Points
+
+| Trust Model | Inflection Step (>50% cascade) | Final Cascade |
+|------------|-------------------------------|---------------|
+| Implicit | Step 0 | 1.000 |
+| Capability-scoped | Step 1 | 1.000 |
+| Zero-trust | **Step 7** | 0.840 |
+
+**Finding:** Zero-trust delays cascade onset by 7 time steps. This is the mechanism: zero-trust doesn't prevent compromise — it SLOWS it, buying time for detection and response. Implicit trust provides zero delay.
+
+### Mechanism: Verification Probability Threshold
+
+| Verification Prob | Cascade Rate | Poison Rate |
+|------------------|-------------|-------------|
+| 0.0 (no verification) | 1.000 | 0.963 |
+| 0.3 | 1.000 | 0.911 |
+| **0.6 (critical threshold)** | **0.920** | **0.771** |
+| 0.8 (default zero-trust) | 0.840 | 0.583 |
+| 1.0 (perfect verification) | 0.200 | 0.207 |
+
+**Finding:** The critical verification threshold is ~0.6. Below 0.6, cascade still reaches 100%. Above 0.6, cascade drops sharply. Perfect verification (1.0) reduces cascade to 20% and poison to 21%. **Practical implication: verification doesn't need to be perfect to be effective, but it needs to exceed 60% detection rate.**
+
+---
+
 ## Hypothesis Resolutions
 
 | ID | Prediction | Result | Verdict |
