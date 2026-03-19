@@ -3,7 +3,7 @@
 > **Gate:** 0.5 (must pass before Phase 1 compute)
 > **Date:** 2026-03-19
 > **Target venue:** AISec Workshop (ACM CCS 2026) — Tier 2
-> **lock_commit:** TO BE SET before Phase 1
+> **lock_commit:** `82d4a63`
 > **Designed for:** 8/10 from day 1 (Gate 0.5 + R34 depth escalation)
 
 ---

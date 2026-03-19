@@ -1,3 +1,13 @@
+---
+title: "Your Multi-Agent System Has a 97% Poison Rate — Here's the Only Defense That Works"
+date: 2026-03-19
+format: technical
+tags: ["ai-security", "multi-agent", "zero-trust", "research"]
+audience_side: "Security OF AI"
+image_count: 4
+description: "First systematic evaluation of cascade propagation in multi-agent AI systems. Zero-trust cuts poison rate by 40pp, but adaptive adversaries recover 54%."
+---
+
 # Your Multi-Agent System Has a 97% Poison Rate — Here's the Only Defense That Works
 
 I built a multi-agent security testing framework and ran 6 experiments across 5 seeds to find out what happens when one agent in a system gets compromised. The results surprised me — and 4 out of 6 of my predictions were wrong.
@@ -70,7 +80,9 @@ The framework is open source. 16 tests, 5 seeds, full reproducibility.
 
 **Fixed parameters.** The base cascade probability was tuned for differentiation. Real-world rates depend on LLM capability and task complexity.
 
-**5 agents maximum in most experiments.** Larger systems (50-100 agents) may behave differently.
+**5 agents maximum in most experiments.** Larger systems (50-100 agents) may exhibit different cascade dynamics — partition effects, natural firebreaks, or communication bottlenecks that slow propagation.
+
+**Single initial compromise.** All experiments start with exactly 1 compromised agent. Multi-point compromise (2+ initial attackers) may produce qualitatively different dynamics — potentially faster cascade or cross-topology interactions that our single-attacker model doesn't capture.
 
 ## What's Next
 
@@ -78,8 +90,14 @@ The framework is open source. 16 tests, 5 seeds, full reproducibility.
 
 **Larger scale.** Test with 20-50 agents to look for partition effects and natural firebreaks.
 
-**Defense-in-depth.** Combine zero-trust with anomaly detection, output monitoring, and rate limiting to counter adaptive adversaries.
+**Defense-in-depth.** Combine zero-trust with anomaly detection, output monitoring, and rate limiting to counter adaptive adversaries. The E4 results show that zero-trust alone is necessary but not sufficient — a defense-aware attacker recovers 54% of the poison rate gap, so additional layers are needed.
+
+**Governance innovation.** This is the first project built with Gate 0.5 (Experimental Design Review) + R34 (Tier 2 Depth Escalation) from [govML](https://github.com/rexcoleman/govML). Every hypothesis, baseline, and kill shot was pre-registered before running a single experiment. The result: 4/6 hypotheses refuted, and those refutations are the most valuable findings. Designing for rigor from day 1 surfaces negative results that matter.
 
 ---
 
-*Rex Coleman is an MS Computer Science student (Machine Learning) at Georgia Tech, building at the intersection of AI security and ML systems engineering. Previously data analytics and enterprise sales at FireEye/Mandiant. CFA charterholder. Creator of [govML](https://github.com/rexcoleman/govML).*
+If you're building multi-agent AI systems and want to understand the security implications, check out the [full framework on GitHub](https://github.com/rexcoleman/multi-agent-security). For more AI security research — adversarial evaluation, agent exploitation, and ML governance — subscribe to the newsletter or follow along on [LinkedIn](https://linkedin.com/in/rexcoleman).
+
+---
+
+*Rex Coleman is securing AI from the architecture up. MS Computer Science (Machine Learning) at Georgia Tech. Previously data analytics and enterprise sales at FireEye/Mandiant. CFA charterholder. Creator of [govML](https://github.com/rexcoleman/govML).*

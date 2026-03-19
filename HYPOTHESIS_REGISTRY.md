@@ -3,7 +3,7 @@
 > **Project:** FP-15 (Multi-Agent Security Testing Framework)
 > **Created:** 2026-03-19
 > **Status:** Pre-registered (6/6 hypotheses locked before Phase 1)
-> **Lock commit:** TO BE SET
+> **Lock commit:** `82d4a63`
 > **Lock date:** 2026-03-19
 
 > **Temporal gate (LL-74):** All hypotheses committed and locked before any experimental results are generated.
@@ -19,7 +19,7 @@
 | **Status** | PENDING |
 | **Evidence** | E1 results |
 | **Linked Experiment** | E1: Cascade vs Agent Count |
-| **lock_commit** | `PENDING` |
+| **lock_commit** | `82d4a63` |
 
 ---
 
@@ -32,7 +32,7 @@
 | **Status** | PENDING |
 | **Evidence** | E2 results |
 | **Linked Experiment** | E2: Trust Model Comparison |
-| **lock_commit** | `PENDING` |
+| **lock_commit** | `82d4a63` |
 
 ---
 
@@ -45,7 +45,7 @@
 | **Status** | PENDING |
 | **Evidence** | E3 results |
 | **Linked Experiment** | E3: Topology Comparison |
-| **lock_commit** | `PENDING` |
+| **lock_commit** | `82d4a63` |
 
 ---
 
@@ -58,7 +58,7 @@
 | **Status** | PENDING |
 | **Evidence** | E4 results |
 | **Linked Experiment** | E4: Adaptive Adversary |
-| **lock_commit** | `PENDING` |
+| **lock_commit** | `82d4a63` |
 
 ---
 
@@ -71,7 +71,7 @@
 | **Status** | PENDING |
 | **Evidence** | E5 results |
 | **Linked Experiment** | E5: Mixed Agent Types |
-| **lock_commit** | `PENDING` |
+| **lock_commit** | `82d4a63` |
 
 ---
 
@@ -84,7 +84,7 @@
 | **Status** | PENDING |
 | **Evidence** | E6 results |
 | **Linked Experiment** | E6: Memory Ablation |
-| **lock_commit** | `PENDING` |
+| **lock_commit** | `82d4a63` |
 
 ---
 
