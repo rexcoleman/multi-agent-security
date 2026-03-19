@@ -229,7 +229,7 @@ Expected credential theft to be the most dangerous attack. Instead, defense-awar
 
 ## Limitations
 
-- **Simulation-based, not real LLM agents.** The cascade dynamics model agent interaction probabilistically. Real LLM agents may behave differently — prompt injection success rates, reasoning quality, and delegation patterns vary by model and context. The simulation establishes the FRAMEWORK for testing; real-agent validation is the next step.
+- **Simulation-based, not real LLM agents — and FP-16 showed the gap is 48pp.** FP-16 real agent experiments found 49% poison rate where this simulation predicted 97%. The simulation overestimates cascade severity because real agents have inherent semantic resistance. Qualitative findings (zero-trust > implicit) hold but quantitative predictions do not transfer. See FP-16 FINDINGS for the simulation-to-real gap analysis.
 - **Fixed cascade probability.** The base cascade probability (0.15) was tuned for differentiation. Real-world cascade probability depends on LLM capability, prompt design, and task complexity. We report relative comparisons between conditions, not absolute rates.
 - **No real-time threat intelligence.** The simulation doesn't model evolving threats, model updates, or adversary learning over multiple encounters. Each run is a static snapshot.
 - **5 agents maximum in most experiments.** E1 goes to 10 agents, but the primary results use 5. Larger systems (50-100 agents) may exhibit different cascade dynamics (e.g., partition effects, natural firebreaks).
