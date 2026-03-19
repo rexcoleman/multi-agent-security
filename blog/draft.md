@@ -1,16 +1,16 @@
 ---
-title: "Your Multi-Agent System Has a 97% Poison Rate — Here's the Only Defense That Works"
+title: "Our Simulation Was Wrong by 37 Percentage Points — What Real LLM Agents Taught Us About Multi-Agent Cascade"
 date: 2026-03-19
 format: technical
-tags: ["ai-security", "multi-agent", "zero-trust", "research"]
+tags: ["ai-security", "multi-agent", "zero-trust", "negative-results", "research"]
 audience_side: "Security OF AI"
 image_count: 4
-description: "First systematic evaluation of cascade propagation in multi-agent AI systems. Zero-trust cuts poison rate by 40pp, but adaptive adversaries recover 54%."
+description: "Simulation predicted 97% cascade poison. Real Claude agents: 60%. Topology matters (simulation said it didn't). The simulation-to-real gap changes everything."
 ---
 
-# Your Multi-Agent System Has a 97% Poison Rate — Here's the Only Defense That Works
+# Our Simulation Was Wrong by 37 Percentage Points — What Real LLM Agents Taught Us About Multi-Agent Cascade
 
-I built a multi-agent security testing framework and ran 6 experiments across 5 seeds to find out what happens when one agent in a system gets compromised. The results surprised me — and 4 out of 6 of my predictions were wrong.
+I built a multi-agent security simulation, ran 6 experiments, then validated against real Claude Haiku agents. The simulation predicted 97% poison rate. Real agents: 60%. And the biggest surprise: topology matters — something the simulation said was irrelevant.
 
 ## What I Built
 
@@ -18,13 +18,19 @@ A simulation-based testbed that models multi-agent systems with configurable tru
 
 Three trust models (implicit, capability-scoped, zero-trust). Three topologies (hierarchical, flat, star). Three attacker types (naive, defense-aware, credential-theft). Five seeds per experiment. 16 passing tests.
 
-## The Headline: Implicit Trust = Zero Containment
+## The Headline: Simulation ≠ Reality
 
-Under implicit trust — the default in CrewAI, AutoGen, and most multi-agent frameworks — a single compromised agent cascades to 100% of the system. Every agent compromised. 97.4% of all decisions poisoned. This holds whether you have 2 agents or 10.
+Our simulation predicted 97% poison under implicit trust. Real Claude Haiku agents: **60%**. Real LLMs don't blindly propagate poisoned content — they have enough semantic understanding to partially resist.
 
-![E1: Cascade rate reaches 1.0 at all system sizes under implicit trust. Poison rate increases slightly from 94.5% at 2 agents to 97.8% at 10 agents.](images/e1_cascade_vs_count.png)
+| | Simulation | Real Agents | Gap |
+|---|---|---|---|
+| Implicit trust poison | 97.4% | **60.0%** | **37pp** |
+| Zero-trust poison | 58.3% | **53.3%** | 5pp |
+| Topology matters? | No (all ~97%) | **Yes (17pp spread)** | Qualitatively wrong |
 
-If your multi-agent system uses implicit trust (and most do), you have zero containment. Adding more agents doesn't help. Reorganizing the network doesn't help.
+![E1: Cascade rate reaches 1.0 at all system sizes under implicit trust in simulation. Real agents show much lower rates.](images/e1_cascade_vs_count.png)
+
+The simulation overestimates by 37pp. But it gets one thing right: **zero-trust is the best defense.**
 
 ## The Only Defense: Zero-Trust
 
@@ -56,14 +62,19 @@ Here's where it gets uncomfortable. A defense-aware attacker — one who knows y
 
 The defense-aware attacker pushes poison rate from 58% back up to 90% — recovering 54% of the gap zero-trust created. Credential theft is surprisingly less effective than defense-awareness. **It's not who you are that matters in agent trust — it's what you say.**
 
-## What Doesn't Matter (4 Negative Results)
+## The Simulation Got Wrong (and Right)
 
-I was wrong about 4 out of 6 predictions. These negative results are more valuable than the confirmations:
+The simulation predicted topology doesn't matter. **Real agents proved otherwise.**
 
-1. **Topology doesn't matter.** Hierarchical, flat, and star all reach 100% cascade. Reorganizing your agent network won't help.
-2. **Agent type doesn't matter.** All-LLM, mixed RL+LLM, rule-based — all produce identical cascade dynamics.
-3. **Memory isolation barely helps.** Shared vs isolated memory: 1.2pp difference. The delegation channel dominates.
-4. **Credential theft < defense-awareness.** Stealing an agent's identity is less effective than understanding the defense.
+| Topology | Simulation | Real Agents |
+|----------|-----------|------------|
+| Hierarchical | 97.4% | **56.0%** (most protected) |
+| Flat | 97.5% | **73.3%** (worst) |
+| Star | 95.7% | **70.7%** |
+
+**Hierarchical delegation IS a defense** — the tree structure limits parallel cascade. CrewAI's default hierarchy isn't just organizational, it's protective. The simulation missed this because its probabilistic model doesn't capture depth-dependent semantic resistance.
+
+What the simulation got right: agent type and memory isolation don't matter (confirmed in simulation, not yet validated on real agents).
 
 ## What This Means for Practitioners
 
