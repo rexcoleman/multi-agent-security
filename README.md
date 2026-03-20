@@ -1,6 +1,8 @@
 # FP-15: Multi-Agent Security Testing Framework
 
-A simulation-based framework for testing how single-agent compromise cascades through multi-agent systems under different trust architectures, network topologies, and attacker models.
+Under implicit trust, a single compromised agent cascades to 100% of a multi-agent system with 97% poison rate. Zero-trust cuts poison by 40pp, but adaptive adversaries recover 54% of that advantage. The simulation-to-real gap is 37pp — real Claude agents resist at 60%, not 97%.
+
+**Blog post:** [Our Simulation Was Wrong by 37 Percentage Points](https://rexcoleman.dev/posts/multi-agent-security/)
 
 ## Key Finding
 
