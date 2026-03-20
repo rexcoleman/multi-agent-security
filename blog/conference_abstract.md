@@ -7,15 +7,11 @@
 
 ## Abstract
 
-Multi-agent AI systems are becoming the dominant production architecture, yet no open-source framework exists for testing their security under compromise. We present the first systematic evaluation of cascade propagation in multi-agent systems, measuring how a single compromised agent's poisoned outputs affect downstream decisions across 3 trust models, 3 network topologies, 3 attacker types, 4 agent compositions, and 3 memory modes — totaling 6 experiments with 5-seed validation.
+Multi-agent AI systems are becoming the dominant production architecture, yet no open-source framework exists for testing their security under compromise. Under implicit trust — the default in CrewAI, AutoGen, and most frameworks — a single compromised agent cascades to 100% of the system regardless of topology, agent type, or memory configuration.
 
-Key findings:
-1. **Under implicit trust (the default in CrewAI, AutoGen, and most frameworks), cascade reaches 100% regardless of system size, topology, agent type, or memory configuration.** The default provides zero containment.
-2. **Zero-trust architecture reduces poison rate by 40 percentage points** (0.974 → 0.583) — the only effective defense. Capability-scoping achieves only 7pp reduction.
-3. **Adaptive adversaries recover 54% of zero-trust's advantage.** A defense-aware attacker pushes poison rate from 0.583 back to 0.899, demonstrating that static verification is insufficient.
-4. **4 of 6 pre-registered hypotheses were refuted**, yielding practitioner-relevant negative results: topology, agent type, and memory mode are irrelevant to cascade dynamics. The solution space is narrower than expected.
+We present the first systematic evaluation of cascade propagation across 3 trust models, 3 topologies, 3 attacker types, 4 agent compositions, and 3 memory modes (6 experiments, 5-seed validation). Zero-trust architecture reduces poison rate by 40 percentage points — the only effective defense. But adaptive adversaries recover 54% of that advantage, pushing poison from 0.583 back to 0.899. Four of six pre-registered hypotheses were refuted: topology, agent type, and memory are irrelevant to cascade dynamics.
 
-We release the framework as open source with configurable parameters, 16 tests, and full reproducibility.
+Attendees will leave with a concrete threat model for multi-agent compromise, the empirical evidence that zero-trust is necessary but insufficient, and access to the open-source framework for testing their own deployments. Suitable for intermediate to advanced practitioners.
 
 ## Bio (100 words)
 

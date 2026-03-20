@@ -23,6 +23,8 @@ If you're building multi-agent systems, implement zero-trust verification at eve
 
 Framework is open source. 6 experiments, 5 seeds, 16 tests.
 
+What trust model does your multi-agent system use? I'd bet it's implicit.
+
 #AISecurity #MultiAgent #ZeroTrust #MachineLearning #BuildInPublic
 
 ---
