@@ -1,3 +1,12 @@
+---
+project: "Simulation Overestimates Multi-Agent Cascade by 37pp — But Topology Matters Mo"
+fp: "FP-08"
+status: COMPLETE
+quality_score: 8.2
+last_scored: 2026-03-20
+profile: security-ml
+---
+
 # Simulation Overestimates Multi-Agent Cascade by 37pp — But Topology Matters More Than We Thought
 
 > **Status:** COMPLETE — simulation (6 experiments × 5 seeds) + real agent validation (2 experiments × 3 seeds on Claude Haiku), 16 tests, 7 figures
