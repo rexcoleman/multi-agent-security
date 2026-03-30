@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this research, please cite it as below."
+type: software
+title: "Simulation Overestimates Multi-Agent Cascade by 37pp — But Topology Matters More Than We Thought"
+authors:
+  - family-names: Coleman
+    given-names: Rex
+abstract: "Simulation Overestimates Multi-Agent Cascade by 37pp — But Topology Matters More Than We Thought"
+date-released: "2026-03-30"
+url: "https://github.com/rexcoleman/multi-agent-security"
+repository-code: "https://github.com/rexcoleman/multi-agent-security"
+license: MIT
+keywords:
+  - "ai-agents"
+  - "cascade-attacks"
+  - "reproducible-research"
+  - "security-ml"

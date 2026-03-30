@@ -1,69 +1,74 @@
-# FP-15: Multi-Agent Security Testing Framework
+# Simulation Overestimates Multi-Agent Cascade by 37pp — But Topology Matters More Than We Thought
 
-Under implicit trust, a single compromised agent cascades to 100% of a multi-agent system with 97% poison rate. Zero-trust cuts poison by 40pp, but adaptive adversaries recover 54% of that advantage. The simulation-to-real gap is 37pp — real Claude agents resist at 60%, not 97%.
+**Zero-trust cuts cascade by ~7pp (not 40pp). Topology DOES matter — hierarchical is protective (0.560 vs flat 0.733). The simulation overestimates severity by 37pp but correctly predicts zero-trust is best.**
 
 **Blog post:** [Our Simulation Was Wrong by 37 Percentage Points](https://rexcoleman.dev/posts/multi-agent-security/)
 
-## Key Finding
+![govML](https://img.shields.io/badge/govML-v3.3-blue) ![Quality](https://img.shields.io/badge/quality-8.3-brightgreen) ![License](https://img.shields.io/badge/license-MIT-green)
 
-Under implicit trust (the default in CrewAI, AutoGen, and most frameworks), a single compromised agent cascades to 100% of the system with 97% poison rate. **Zero-trust is the only effective defense**, cutting poison rate by 40pp — but adaptive adversaries recover 54% of that advantage.
+![Key Result](outputs/figures/e1_cascade_vs_count.png)
+
+## Key Results
+
+| Agent Count | Cascade Rate (mean +/- std) | Poison Rate (mean +/- std) |
+|------------|---------------------------|---------------------------|
+| 2 | 1.000 +/- 0.000 | 0.945 +/- 0.006 |
+| 3 | 1.000 +/- 0.000 | 0.960 +/- 0.011 |
+| 5 | 1.000 +/- 0.000 | 0.974 +/- 0.009 |
+| 7 | 1.000 +/- 0.000 | 0.981 +/- 0.008 |
+| 10 | 1.000 +/- 0.000 | 0.978 +/- 0.006 |
+
+**Core insight:** Zero-trust cuts cascade by ~7pp (not 40pp). Topology DOES matter — hierarchical is protective (0.560 vs flat 0.733). The simulation overestimates severity by 37pp but correctly predicts zero-trust is best.
 
 ## Quick Start
 
 ```bash
-pip install -e ".[dev]"
-python -m pytest tests/ -v          # 16 tests
-python scripts/run_experiments.py   # All 6 experiments × 5 seeds
-python scripts/make_figures.py      # 7 publication figures
-```
-
-Or run everything:
-```bash
+git clone https://github.com/rexcoleman/multi-agent-security
+cd multi-agent-security
+pip install -e .
 bash reproduce.sh
 ```
 
-## Experiments
-
-| ID | Question | Key Finding |
-|----|----------|-------------|
-| E1 | Does cascade scale with agent count? | 100% cascade at ALL sizes (2-10 agents) |
-| E2 | Which trust model defends best? | Zero-trust: 84% cascade, 58% poison (vs 100%/97%) |
-| E3 | Does topology matter? | No. All topologies → 100% cascade |
-| E4 | Can adaptive adversaries defeat zero-trust? | Defense-aware attacker recovers 54% of ZT gains |
-| E5 | Do agent types matter? | No. LLM, RL, rule-based — identical dynamics |
-| E6 | Does shared memory accelerate cascade? | Barely. 1.2pp difference |
-
-## Designed for 8/10
-
-This project uses [govML](https://github.com/rexcoleman/govML) Gate 0.5 (Experimental Design Review) + R34 (Tier 2 Depth Escalation):
-- 6 pre-registered hypotheses (4 refuted, 1 supported, 1 partial)
-- 3 comparison baselines (OWASP, FP-02, ACM Survey)
-- 4 pre-registered reviewer kill shots with mitigations
-- 5-component ablation plan
-- 3 evaluation settings
-- Mechanism analysis for each major claim
-- Adaptive adversary testing
-
-## Structure
+## Project Structure
 
 ```
-├── EXPERIMENTAL_DESIGN.md    # Gate 0.5 design review (designed for 8/10)
-├── FINDINGS.md               # Full results with hypothesis resolutions
-├── HYPOTHESIS_REGISTRY.md    # 6 pre-registered hypotheses
-├── src/                      # Simulation framework
-│   ├── agent.py              # Agent model (LLM, RL, rule-based)
-│   ├── trust.py              # Trust models (implicit, capability-scoped, zero-trust)
-│   ├── network.py            # Network simulation engine
-│   └── attacker.py           # Attacker models (naive, defense-aware, credential-theft)
-├── scripts/
-│   ├── run_experiments.py    # Run all 6 experiments
-│   └── make_figures.py       # Generate 7 publication figures
-├── tests/                    # 16 tests
-├── config/base.yaml          # All experiment parameters
-├── blog/                     # Content pipeline (draft, LinkedIn, Substack, conference)
-└── docs/                     # Governance documents
+FINDINGS.md # Research findings with pre-registered hypotheses and full results
+EXPERIMENTAL_DESIGN.md # Pre-registered experimental design and methodology
+HYPOTHESIS_REGISTRY.md # Hypothesis predictions, results, and verdicts
+reproduce.sh # One-command reproduction of all experiments
+governance.yaml # govML governance configuration
+CITATION.cff # Citation metadata
+LICENSE # MIT License
+pyproject.toml # Python project configuration
+scripts/ # Experiment and analysis scripts
+src/ # Source code
+tests/ # Test suite
+outputs/ # Experiment outputs and results
+data/ # Data files and datasets
+config/ # Configuration files
+docs/ # Documentation and decision records
 ```
+
+## Methodology
+
+See [FINDINGS.md](FINDINGS.md) and [EXPERIMENTAL_DESIGN.md](EXPERIMENTAL_DESIGN.md) for detailed methodology, pre-registered hypotheses, and full experimental results with multi-seed validation.
+
+## Limitations
+
+- **Simulation-based, not real LLM agents — and showed the gap is 48pp.** real agent experiments found 49% poison rate where this simulation predicted 97%. The simulation overestimates cascade severity because real agents have inherent semantic resistance. Qualitative findings (zero-trust > implicit) hold but quantitative predictions do not transfer. See FINDINGS for the simulation-to-real gap analysis.
+- **Fixed cascade probability.** The base cascade probability (0.15) was tuned for differentiation. Real-world cascade probability depends on LLM capability, prompt design, and task complexity. We report relative comparisons between conditions, not absolute rates.
+- **No real-time threat intelligence.** The simulation doesn't model evolving threats, model updates, or adversary learning over multiple encounters. Each run is a static snapshot.
+- **5 agents maximum in most experiments.** E1 goes to 10 agents, but the primary results use 5. Larger systems (50-100 agents) may exhibit different cascade dynamics (e.g., partition effects, natural firebreaks).
+- **Single compromised agent assumption.** All experiments start with exactly 1 compromised agent. Multi-point compromise (2+ initial attackers) may produce qualitatively different dynamics.
+
+## Citation
+
+If you use this work, please cite using the metadata in [CITATION.cff](CITATION.cff).
 
 ## License
 
-MIT
+[MIT](LICENSE) 2026 Rex Coleman
+
+---
+
+Governed by [govML](https://rexcoleman.dev/posts/govml-methodology/) v3.3
