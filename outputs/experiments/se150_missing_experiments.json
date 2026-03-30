@@ -1,0 +1,242 @@
+{
+  "e7d": [
+    {
+      "experiment": "e7d_assignment_ablation",
+      "topology": "hierarchical",
+      "assignment": "round_robin",
+      "n_agents": 20,
+      "cascade_mean": 0.75,
+      "cascade_std": 0.0837,
+      "poison_mean": 0.6394,
+      "poison_std": 0.0466
+    },
+    {
+      "experiment": "e7d_assignment_ablation",
+      "topology": "hierarchical",
+      "assignment": "random",
+      "n_agents": 20,
+      "cascade_mean": 0.79,
+      "cascade_std": 0.0583,
+      "poison_mean": 0.6721,
+      "poison_std": 0.0395
+    },
+    {
+      "experiment": "e7d_assignment_ablation",
+      "topology": "hierarchical",
+      "assignment": "clustered",
+      "n_agents": 20,
+      "cascade_mean": 0.75,
+      "cascade_std": 0.0837,
+      "poison_mean": 0.6394,
+      "poison_std": 0.0466
+    },
+    {
+      "experiment": "e7d_assignment_ablation",
+      "topology": "flat",
+      "assignment": "round_robin",
+      "n_agents": 20,
+      "cascade_mean": 0.89,
+      "cascade_std": 0.102,
+      "poison_mean": 0.5166,
+      "poison_std": 0.1069
+    },
+    {
+      "experiment": "e7d_assignment_ablation",
+      "topology": "flat",
+      "assignment": "random",
+      "n_agents": 20,
+      "cascade_mean": 0.89,
+      "cascade_std": 0.097,
+      "poison_mean": 0.5888,
+      "poison_std": 0.0762
+    },
+    {
+      "experiment": "e7d_assignment_ablation",
+      "topology": "flat",
+      "assignment": "clustered",
+      "n_agents": 20,
+      "cascade_mean": 0.89,
+      "cascade_std": 0.102,
+      "poison_mean": 0.5166,
+      "poison_std": 0.1069
+    },
+    {
+      "experiment": "e7d_assignment_ablation",
+      "topology": "star",
+      "assignment": "round_robin",
+      "n_agents": 20,
+      "cascade_mean": 0.34,
+      "cascade_std": 0.1158,
+      "poison_mean": 0.5693,
+      "poison_std": 0.0455
+    },
+    {
+      "experiment": "e7d_assignment_ablation",
+      "topology": "star",
+      "assignment": "random",
+      "n_agents": 20,
+      "cascade_mean": 0.42,
+      "cascade_std": 0.1249,
+      "poison_mean": 0.5967,
+      "poison_std": 0.0535
+    },
+    {
+      "experiment": "e7d_assignment_ablation",
+      "topology": "star",
+      "assignment": "clustered",
+      "n_agents": 20,
+      "cascade_mean": 0.34,
+      "cascade_std": 0.1158,
+      "poison_mean": 0.5693,
+      "poison_std": 0.0455
+    }
+  ],
+  "e7e": [
+    {
+      "experiment": "e7e_adversary_vs_two_of_three",
+      "topology": "hierarchical",
+      "attacker": "naive",
+      "n_agents": 20,
+      "cascade_mean": 0.75,
+      "cascade_std": 0.0837,
+      "poison_mean": 0.6394,
+      "poison_std": 0.0466
+    },
+    {
+      "experiment": "e7e_adversary_vs_two_of_three",
+      "topology": "hierarchical",
+      "attacker": "defense_aware",
+      "n_agents": 20,
+      "cascade_mean": 0.72,
+      "cascade_std": 0.051,
+      "poison_mean": 0.608,
+      "poison_std": 0.0625
+    },
+    {
+      "experiment": "e7e_adversary_vs_two_of_three",
+      "topology": "hierarchical",
+      "attacker": "credential_theft",
+      "n_agents": 20,
+      "cascade_mean": 0.72,
+      "cascade_std": 0.051,
+      "poison_mean": 0.608,
+      "poison_std": 0.0625
+    },
+    {
+      "experiment": "e7e_adversary_vs_two_of_three",
+      "topology": "flat",
+      "attacker": "naive",
+      "n_agents": 20,
+      "cascade_mean": 0.89,
+      "cascade_std": 0.102,
+      "poison_mean": 0.5166,
+      "poison_std": 0.1069
+    },
+    {
+      "experiment": "e7e_adversary_vs_two_of_three",
+      "topology": "flat",
+      "attacker": "defense_aware",
+      "n_agents": 20,
+      "cascade_mean": 0.92,
+      "cascade_std": 0.0678,
+      "poison_mean": 0.5941,
+      "poison_std": 0.086
+    },
+    {
+      "experiment": "e7e_adversary_vs_two_of_three",
+      "topology": "flat",
+      "attacker": "credential_theft",
+      "n_agents": 20,
+      "cascade_mean": 0.92,
+      "cascade_std": 0.0678,
+      "poison_mean": 0.5941,
+      "poison_std": 0.086
+    },
+    {
+      "experiment": "e7e_adversary_vs_two_of_three",
+      "topology": "star",
+      "attacker": "naive",
+      "n_agents": 20,
+      "cascade_mean": 0.34,
+      "cascade_std": 0.1158,
+      "poison_mean": 0.5693,
+      "poison_std": 0.0455
+    },
+    {
+      "experiment": "e7e_adversary_vs_two_of_three",
+      "topology": "star",
+      "attacker": "defense_aware",
+      "n_agents": 20,
+      "cascade_mean": 0.36,
+      "cascade_std": 0.086,
+      "poison_mean": 0.6493,
+      "poison_std": 0.0322
+    },
+    {
+      "experiment": "e7e_adversary_vs_two_of_three",
+      "topology": "star",
+      "attacker": "credential_theft",
+      "n_agents": 20,
+      "cascade_mean": 0.36,
+      "cascade_std": 0.086,
+      "poison_mean": 0.6493,
+      "poison_std": 0.0322
+    }
+  ],
+  "e7f": [
+    {
+      "experiment": "e7f_power_analysis",
+      "topology": "hierarchical",
+      "n_agents": 20,
+      "effect_size": 0.3451,
+      "ci_width_95": 0.036,
+      "ci_to_effect_ratio": 0.1044,
+      "sufficient": "YES"
+    },
+    {
+      "experiment": "e7f_power_analysis",
+      "topology": "flat",
+      "n_agents": 20,
+      "effect_size": 0.4733,
+      "ci_width_95": 0.0972,
+      "ci_to_effect_ratio": 0.2054,
+      "sufficient": "YES"
+    },
+    {
+      "experiment": "e7f_power_analysis",
+      "topology": "star",
+      "n_agents": 20,
+      "effect_size": 0.36,
+      "ci_width_95": 0.0381,
+      "ci_to_effect_ratio": 0.1058,
+      "sufficient": "YES"
+    },
+    {
+      "experiment": "e7f_power_analysis",
+      "topology": "hierarchical",
+      "n_agents": 50,
+      "effect_size": 0.5012,
+      "ci_width_95": 0.0685,
+      "ci_to_effect_ratio": 0.1367,
+      "sufficient": "YES"
+    },
+    {
+      "experiment": "e7f_power_analysis",
+      "topology": "flat",
+      "n_agents": 50,
+      "effect_size": 0.497,
+      "ci_width_95": 0.0401,
+      "ci_to_effect_ratio": 0.0807,
+      "sufficient": "YES"
+    },
+    {
+      "experiment": "e7f_power_analysis",
+      "topology": "star",
+      "n_agents": 50,
+      "effect_size": 0.378,
+      "ci_width_95": 0.0546,
+      "ci_to_effect_ratio": 0.1444,
+      "sufficient": "YES"
+    }
+  ]
+}

@@ -263,6 +263,41 @@ We contribute:
 
 ---
 
+## E7d-E7f: Missing Experiments (identified by govML-driven design review)
+
+> These experiments were identified by running the govML pipeline AFTER E7a-c, revealing conditions that governance-first design would have required upfront. Running them now to close the gaps.
+
+### E7d: Capability Assignment Ablation
+
+**Question:** Does the round-robin assignment of capabilities matter, or would random assignment produce equivalent results?
+
+| Assignment Strategy | Description | What It Tests |
+|---|---|---|
+| Round-robin (current) | Agent i gets combo [i % 3] | Deterministic, maximally distributed |
+| Random | Each agent gets a random 2-of-3 combo | Whether structural distribution matters vs random partitioning |
+| Clustered | First N/3 agents get combo 0, next N/3 get combo 1, rest get combo 2 | Whether geographic clustering of capabilities affects cascade |
+
+**Prediction:** Round-robin ≈ random (partition distribution shouldn't matter if combos are equal probability). Clustered may differ if topology creates capability-homogeneous neighborhoods.
+
+### E7e: Adaptive Adversary vs Two-of-Three
+
+**Question:** Can an adversary who knows the two-of-three constraint exploit it? E4 only tested adversaries against the original 3 trust models.
+
+| Adversary Type | Strategy Against Two-of-Three |
+|---|---|
+| Naive | Standard attack, unaware of capability constraints |
+| Constraint-aware | Targets agents with data_access + external_communication combo (the exfiltration-capable pair). Focuses cascade on agents whose 2-of-3 permits the most dangerous action. |
+
+**Prediction:** Constraint-aware attacker will partially defeat two-of-three by targeting the weakest capability combination, recovering 30-50% of the constraint's advantage (similar to E4 adaptive vs zero-trust recovery of 54%).
+
+### E7f: Power Analysis
+
+**Question:** Are 5 seeds sufficient for the effect sizes observed in E7a-c?
+
+**Method:** For each key comparison, compute the 95% CI width and compare to effect size. If CI width > 50% of effect size, 5 seeds is insufficient for that comparison.
+
+---
+
 ## 12) Phase Plan
 
 | Phase | Activities | Gate | Compute |

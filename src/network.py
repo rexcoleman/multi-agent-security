@@ -70,6 +70,7 @@ class AgentNetwork:
         seed: int = 42,
         base_accuracy: float = 0.95,
         compromise_potency: float = 0.90,
+        capability_assignment: str = "round_robin",
     ):
         self.n_agents = n_agents
         self.topology = topology
@@ -78,6 +79,7 @@ class AgentNetwork:
         self.seed = seed
         self.rng = np.random.default_rng(seed)
         self.trust_model = create_trust_model(trust_model_name)
+        self.capability_assignment = capability_assignment
 
         # Create agents
         self.agents = {}
@@ -99,24 +101,33 @@ class AgentNetwork:
         self.shared_memory: list[Task] = []
 
     def _assign_capabilities(self, agent_id: int, n_agents: int, trust_model_name: str) -> set:
-        """Assign capabilities based on trust model.
+        """Assign capabilities based on trust model and assignment strategy.
 
         For two_of_three: each agent gets exactly 2 of 3 capability categories.
-        Agents are distributed across the 3 possible 2-of-3 combinations:
-          Combo 0: {data_access, code_execution}
-          Combo 1: {data_access, external_communication}
-          Combo 2: {code_execution, external_communication}
-        This ensures no single agent can independently: access data + execute code + communicate externally.
+        Assignment strategies:
+          - round_robin: Agent i gets combo [i % 3]. Maximally distributed.
+          - random: Each agent gets a random combo. Uses self.rng for reproducibility.
+          - clustered: First N/3 get combo 0, next N/3 get combo 1, rest get combo 2.
         """
         if trust_model_name == "two_of_three":
             categories = ["data_access", "code_execution", "external_communication"]
-            # 3 possible 2-of-3 combos, distribute agents round-robin
             combos = [
                 {categories[0], categories[1]},           # data + code
                 {categories[0], categories[2]},           # data + comm
                 {categories[1], categories[2]},           # code + comm
             ]
-            combo = combos[agent_id % 3]
+            if self.capability_assignment == "random":
+                combo = combos[int(self.rng.integers(0, 3))]
+            elif self.capability_assignment == "clustered":
+                third = max(1, n_agents // 3)
+                if agent_id < third:
+                    combo = combos[0]
+                elif agent_id < 2 * third:
+                    combo = combos[1]
+                else:
+                    combo = combos[2]
+            else:  # round_robin (default)
+                combo = combos[agent_id % 3]
             return {"general", f"role_{agent_id % 3}"} | combo
         else:
             return {"general", f"role_{agent_id % 3}"}

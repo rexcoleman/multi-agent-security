@@ -155,3 +155,5 @@
 | H-8 | Two-of-three between implicit and zero-trust | zero-trust ≤ 2of3 ≤ implicit | PENDING |
 | H-9 | Trust model ordering is topology-independent | Same ordering all topologies | PENDING |
 | H-10 | Two-of-three advantage scales with count | Gap increases n=5→50 | PENDING |
+| H-11 | Capability assignment strategy doesn't matter | round-robin ≈ random ≈ clustered | PENDING |
+| H-12 | Constraint-aware adversary partially defeats two-of-three | Recovers 30-50% of constraint advantage | PENDING |
