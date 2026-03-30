@@ -166,6 +166,22 @@ We contribute:
 | FP-02 single-agent attacks (Coleman 2026) | 19 scenarios, 3 seeds, Claude Sonnet | Reproduce top 3 attack classes on same Claude backend in single-agent mode. Then inject same attacks into multi-agent system. Delta = cascade amplification. |
 | Cohen et al. "AI Worm" propagation | GenAI ecosystem simulation | Reproduce their propagation scenario in our testbed: one poisoned agent, measure downstream impact over time. Compare their qualitative findings to our quantitative rates. |
 
+### Threats to Validity
+
+**Internal validity:**
+- Simulation uses fixed cascade probability (0.15) — sensitivity analysis (§ Parameter Sensitivity) shows results are robust across 0.05-0.50.
+- Two-of-three capability assignment is round-robin — random assignment may produce different results (ablation planned but not yet run).
+- Adaptive adversary (E4) only tested against original 3 trust models, not yet against two-of-three.
+
+**External validity:**
+- Simulation overestimates cascade by 37pp vs real Claude Haiku agents (§ Real Agent Validation). SE-150 results carry same synthetic qualifier.
+- Single LLM backend (Haiku) for real validation. Other models (GPT-4, Llama) may show different cascade dynamics.
+- Agent counts up to 50 tested. Production systems with 100+ agents may exhibit different dynamics.
+
+**Construct validity:**
+- "Cascade rate" measures fraction of agents compromised, not severity of compromise. A 50% cascade rate where compromised agents produce low-quality-but-harmless output differs from 50% cascade with data exfiltration.
+- "Capability partitioning" in simulation is binary (has/doesn't have). Real capability enforcement may be partial or bypassable.
+
 ### Depth Escalation Checklist
 
 | # | Requirement | Status |
@@ -190,8 +206,60 @@ We contribute:
 | E5: Mixed agent types | Agent composition | All-LLM, LLM+RL, LLM+rule-based | Cascade rate by agent type | 5 |
 | E6: Shared memory ablation | Memory isolation | Shared, partitioned, isolated | Cascade rate | 5 |
 
-**Total runs:** 6 experiments × ~5 levels × 5 seeds = ~150 runs
+| E7: Two-of-three constraint | Trust architecture | Implicit, capability-scoped, zero-trust, two-of-three | Cascade rate, poison rate | 5 |
+
+**Total runs:** 7 experiments. E1-E6: ~150 runs. E7: 4 models × 4 agent counts × 3 topologies × 5 seeds = 240 runs.
 **Estimated compute:** ~30-50 CPU-hours (API calls are the bottleneck, not compute)
+
+---
+
+## 8a) Novelty Plan (SE-150: Two-of-Three Constraint)
+
+> [SEED: sunset after 5 projects if this never changes experimental design | PT-5]
+
+**Prior art search strategy:** Google Scholar + arXiv for "capability-based security multi-agent", "least privilege agent systems", "NVIDIA NemoClaw security", "two-of-three constraint". Minimum 5 papers reviewed.
+**Expected contribution type:** Novel combination — importing capability-based security (Saltzer & Schroeder 1975, OS security) into multi-agent LLM systems.
+**What result would surprise us?**
+- EXPECTED: Two-of-three performs between zero-trust and implicit trust.
+- SURPRISE 1: Two-of-three OUTPERFORMS zero-trust for some topology (less restrictive but more effective?)
+- SURPRISE 2: Two-of-three is WORSE than implicit for some topology (constraint creates attack surface?)
+- SURPRISE 3: Non-monotonic cascade dynamics with agent count under two-of-three (emergent behavior)
+- SURPRISE 4: Topology × trust model interaction — same model behaves differently across topologies
+
+| Novel Component | How Tested (ablation) | Expected Effect If Removed |
+|----------------|----------------------|---------------------------|
+| Two-of-three capability constraint | Remove constraint → agents get all 3 capabilities (= implicit) | Cascade rate increases to implicit baseline |
+| Capability-based acceptance filter | Replace with implicit acceptance | Poison rate increases (no capability overlap check) |
+| Round-robin capability assignment | Replace with random assignment | May change topology × trust interaction if capability distribution matters |
+
+---
+
+## 8b) Impact Plan (SE-150)
+
+> [SEED: sunset after 5 projects if this never produces a shipped artifact | PT-5]
+
+**Target practitioners:** Multi-agent system builders using CrewAI, LangChain, AutoGen. Estimated ~50K+ active developers.
+**Planned artifacts:**
+- TwoOfThreeConstraint class in src/trust.py (importable, documented)
+- Comparison table: zero-trust vs two-of-three tradeoffs for practitioners
+- Architecture recommendation: which trust model for which topology
+**Deployment path:** `pip install` or copy trust.py into existing multi-agent project. Drop-in replacement for existing trust model.
+
+---
+
+## 8c) Generalization Plan (SE-150)
+
+> [SEED: sunset after 5 projects if this doesn't improve generalization scores | PT-5]
+
+**Evaluation conditions (target ≥2 for Tier 2+):**
+
+| Condition | Why This Tests Generalization | Data/Setup Required |
+|-----------|------------------------------|-------------------|
+| 3 topologies (hierarchical, flat, star) | Tests whether constraint effectiveness depends on communication structure | Existing topology implementations |
+| 4 agent counts (5, 10, 20, 50) | Tests scaling behavior — does constraint hold at larger systems? | Parameterized simulation |
+| 4 trust models compared side-by-side | Establishes relative positioning across defense strategies | All trust models in trust.py |
+
+**What constitutes transfer evidence:** Two-of-three should reduce cascade relative to implicit trust across ALL topologies and agent counts. If it fails on any topology, that's a boundary condition to document.
 
 ---
 

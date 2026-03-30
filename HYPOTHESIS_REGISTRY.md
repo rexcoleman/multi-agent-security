@@ -88,13 +88,70 @@
 
 ---
 
+## H-7: Two-of-three constraint reduces cascade vs implicit trust
+
+| Field | Value |
+|-------|-------|
+| **Statement** | The two-of-three capability constraint (each agent holds at most 2 of 3 capability categories: data_access, code_execution, external_communication) reduces cascade propagation rate compared to implicit trust, across all topologies and agent counts tested. |
+| **Prediction** | poison_rate(two_of_three) < poison_rate(implicit) for all topology × agent_count combinations |
+| **Status** | PENDING |
+| **Evidence** | E7 results |
+| **Linked Experiment** | E7: Two-of-Three Constraint |
+| **lock_commit** | `358dba1` |
+
+---
+
+## H-8: Two-of-three performs between implicit and zero-trust
+
+| Field | Value |
+|-------|-------|
+| **Statement** | The two-of-three constraint produces cascade rates between implicit trust (worst) and zero-trust (best) — it is a less restrictive but less effective defense than zero-trust. |
+| **Prediction** | poison_rate(zero_trust) ≤ poison_rate(two_of_three) ≤ poison_rate(implicit) |
+| **Status** | PENDING |
+| **Evidence** | E7 results |
+| **Linked Experiment** | E7: Two-of-Three Constraint |
+| **lock_commit** | `358dba1` |
+
+---
+
+## H-9: Trust model effectiveness is topology-independent
+
+| Field | Value |
+|-------|-------|
+| **Statement** | The relative ordering of trust models (zero-trust > two-of-three > capability-scoped > implicit) is consistent across all three topologies (hierarchical, flat, star). |
+| **Prediction** | Ordering is identical for all topologies |
+| **Status** | PENDING |
+| **Evidence** | E7 results |
+| **Linked Experiment** | E7: Two-of-Three Constraint |
+| **Surprise detection** | If ordering DIFFERS by topology, that's a novel finding — topology × trust model interaction. |
+| **lock_commit** | `358dba1` |
+
+---
+
+## H-10: Two-of-three advantage scales with agent count
+
+| Field | Value |
+|-------|-------|
+| **Statement** | The cascade reduction advantage of two-of-three vs implicit trust increases with agent count (because more agents = more capability partitioning = more structural containment). |
+| **Prediction** | (implicit_poison - two_of_three_poison) increases monotonically from n=5 to n=50 |
+| **Status** | PENDING |
+| **Evidence** | E7 results |
+| **Linked Experiment** | E7: Two-of-Three Constraint |
+| **lock_commit** | `358dba1` |
+
+---
+
 ## Summary
 
 | ID | Statement (short) | Prediction | Status |
 |----|-------------------|-----------|--------|
-| H-1 | Super-linear cascade with agent count | rate(10) > 2x rate(5) | PENDING |
-| H-2 | Zero-trust ≥50% cascade reduction | rate(ZT) ≤ 0.5 * rate(implicit) | PENDING |
-| H-3 | Flat topology > hierarchical cascade | rate(flat) > rate(hierarchical) | PENDING |
-| H-4 | Adaptive adversary defeats zero-trust | credential > defense_aware > naive | PENDING |
-| H-5 | RL agents amplify cascade | rate(mixed_rl) > rate(all_llm) | PENDING |
-| H-6 | Shared memory accelerates cascade | rate(isolated) ≤ 0.7 * rate(shared) | PENDING |
+| H-1 | Super-linear cascade with agent count | rate(10) > 2x rate(5) | REFUTED |
+| H-2 | Zero-trust ≥50% cascade reduction | rate(ZT) ≤ 0.5 * rate(implicit) | PARTIALLY SUPPORTED |
+| H-3 | Flat topology > hierarchical cascade | rate(flat) > rate(hierarchical) | SUPPORTED (real agents) |
+| H-4 | Adaptive adversary defeats zero-trust | credential > defense_aware > naive | PARTIALLY SUPPORTED |
+| H-5 | RL agents amplify cascade | rate(mixed_rl) > rate(all_llm) | REFUTED |
+| H-6 | Shared memory accelerates cascade | rate(isolated) ≤ 0.7 * rate(shared) | REFUTED |
+| H-7 | Two-of-three reduces cascade vs implicit | poison(2of3) < poison(implicit) for all conditions | PENDING |
+| H-8 | Two-of-three between implicit and zero-trust | zero-trust ≤ 2of3 ≤ implicit | PENDING |
+| H-9 | Trust model ordering is topology-independent | Same ordering all topologies | PENDING |
+| H-10 | Two-of-three advantage scales with count | Gap increases n=5→50 | PENDING |
