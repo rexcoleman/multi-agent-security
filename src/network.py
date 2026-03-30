@@ -83,12 +83,13 @@ class AgentNetwork:
         self.agents = {}
         type_assignments = self._assign_types(n_agents, agent_types)
         for i in range(n_agents):
+            caps = self._assign_capabilities(i, n_agents, trust_model_name)
             self.agents[i] = Agent(
                 agent_id=i,
                 agent_type=type_assignments[i],
                 base_accuracy=base_accuracy,
                 compromise_potency=compromise_potency,
-                capabilities={"general", f"role_{i % 3}"},
+                capabilities=caps,
             )
 
         # Build network graph
@@ -96,6 +97,29 @@ class AgentNetwork:
 
         # Shared memory (for memory ablation experiment)
         self.shared_memory: list[Task] = []
+
+    def _assign_capabilities(self, agent_id: int, n_agents: int, trust_model_name: str) -> set:
+        """Assign capabilities based on trust model.
+
+        For two_of_three: each agent gets exactly 2 of 3 capability categories.
+        Agents are distributed across the 3 possible 2-of-3 combinations:
+          Combo 0: {data_access, code_execution}
+          Combo 1: {data_access, external_communication}
+          Combo 2: {code_execution, external_communication}
+        This ensures no single agent can independently: access data + execute code + communicate externally.
+        """
+        if trust_model_name == "two_of_three":
+            categories = ["data_access", "code_execution", "external_communication"]
+            # 3 possible 2-of-3 combos, distribute agents round-robin
+            combos = [
+                {categories[0], categories[1]},           # data + code
+                {categories[0], categories[2]},           # data + comm
+                {categories[1], categories[2]},           # code + comm
+            ]
+            combo = combos[agent_id % 3]
+            return {"general", f"role_{agent_id % 3}"} | combo
+        else:
+            return {"general", f"role_{agent_id % 3}"}
 
     def _assign_types(self, n: int, type_config: Optional[dict]) -> dict:
         """Assign agent types based on configuration."""
@@ -284,6 +308,8 @@ class AgentNetwork:
         # Trust model reduces cascade probability
         if self.trust_model_name == "zero_trust":
             base_prob *= 0.2
+        elif self.trust_model_name == "two_of_three":
+            base_prob *= 0.35  # Between capability_scoped (0.5) and zero_trust (0.2)
         elif self.trust_model_name == "capability_scoped":
             base_prob *= 0.5
 

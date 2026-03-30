@@ -1,0 +1,434 @@
+[
+  {
+    "topology": "hierarchical",
+    "n_agents": 5,
+    "trust_model": "implicit",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.9713,
+    "poison_std": 0.0064
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 5,
+    "trust_model": "capability_scoped",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.8997,
+    "poison_std": 0.0239
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 5,
+    "trust_model": "zero_trust",
+    "cascade_mean": 0.8,
+    "cascade_std": 0.1265,
+    "poison_mean": 0.5926,
+    "poison_std": 0.0783
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 5,
+    "trust_model": "two_of_three",
+    "cascade_mean": 0.92,
+    "cascade_std": 0.098,
+    "poison_mean": 0.7967,
+    "poison_std": 0.0466
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 10,
+    "trust_model": "implicit",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.9772,
+    "poison_std": 0.0066
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 10,
+    "trust_model": "capability_scoped",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.8553,
+    "poison_std": 0.0396
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 10,
+    "trust_model": "zero_trust",
+    "cascade_mean": 0.5,
+    "cascade_std": 0.1789,
+    "poison_mean": 0.4121,
+    "poison_std": 0.0976
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 10,
+    "trust_model": "two_of_three",
+    "cascade_mean": 0.84,
+    "cascade_std": 0.1356,
+    "poison_mean": 0.6199,
+    "poison_std": 0.1153
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 20,
+    "trust_model": "implicit",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.9845,
+    "poison_std": 0.0106
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 20,
+    "trust_model": "capability_scoped",
+    "cascade_mean": 0.99,
+    "cascade_std": 0.02,
+    "poison_mean": 0.882,
+    "poison_std": 0.025
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 20,
+    "trust_model": "zero_trust",
+    "cascade_mean": 0.32,
+    "cascade_std": 0.051,
+    "poison_mean": 0.2971,
+    "poison_std": 0.0672
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 20,
+    "trust_model": "two_of_three",
+    "cascade_mean": 0.75,
+    "cascade_std": 0.0837,
+    "poison_mean": 0.6394,
+    "poison_std": 0.0466
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 50,
+    "trust_model": "implicit",
+    "cascade_mean": 0.996,
+    "cascade_std": 0.008,
+    "poison_mean": 0.9884,
+    "poison_std": 0.0041
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 50,
+    "trust_model": "capability_scoped",
+    "cascade_mean": 0.904,
+    "cascade_std": 0.0496,
+    "poison_mean": 0.8047,
+    "poison_std": 0.0208
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 50,
+    "trust_model": "zero_trust",
+    "cascade_mean": 0.128,
+    "cascade_std": 0.0431,
+    "poison_mean": 0.1603,
+    "poison_std": 0.0384
+  },
+  {
+    "topology": "hierarchical",
+    "n_agents": 50,
+    "trust_model": "two_of_three",
+    "cascade_mean": 0.504,
+    "cascade_std": 0.0862,
+    "poison_mean": 0.4872,
+    "poison_std": 0.0791
+  },
+  {
+    "topology": "flat",
+    "n_agents": 5,
+    "trust_model": "implicit",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.9737,
+    "poison_std": 0.0106
+  },
+  {
+    "topology": "flat",
+    "n_agents": 5,
+    "trust_model": "capability_scoped",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.8926,
+    "poison_std": 0.0222
+  },
+  {
+    "topology": "flat",
+    "n_agents": 5,
+    "trust_model": "zero_trust",
+    "cascade_mean": 0.76,
+    "cascade_std": 0.2332,
+    "poison_mean": 0.5212,
+    "poison_std": 0.1243
+  },
+  {
+    "topology": "flat",
+    "n_agents": 5,
+    "trust_model": "two_of_three",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.8354,
+    "poison_std": 0.0306
+  },
+  {
+    "topology": "flat",
+    "n_agents": 10,
+    "trust_model": "implicit",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.979,
+    "poison_std": 0.0081
+  },
+  {
+    "topology": "flat",
+    "n_agents": 10,
+    "trust_model": "capability_scoped",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.8968,
+    "poison_std": 0.0094
+  },
+  {
+    "topology": "flat",
+    "n_agents": 10,
+    "trust_model": "zero_trust",
+    "cascade_mean": 0.74,
+    "cascade_std": 0.1625,
+    "poison_mean": 0.464,
+    "poison_std": 0.1274
+  },
+  {
+    "topology": "flat",
+    "n_agents": 10,
+    "trust_model": "two_of_three",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.751,
+    "poison_std": 0.0489
+  },
+  {
+    "topology": "flat",
+    "n_agents": 20,
+    "trust_model": "implicit",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.99,
+    "poison_std": 0.0049
+  },
+  {
+    "topology": "flat",
+    "n_agents": 20,
+    "trust_model": "capability_scoped",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.8604,
+    "poison_std": 0.0149
+  },
+  {
+    "topology": "flat",
+    "n_agents": 20,
+    "trust_model": "zero_trust",
+    "cascade_mean": 0.5,
+    "cascade_std": 0.1517,
+    "poison_mean": 0.2959,
+    "poison_std": 0.0955
+  },
+  {
+    "topology": "flat",
+    "n_agents": 20,
+    "trust_model": "two_of_three",
+    "cascade_mean": 0.89,
+    "cascade_std": 0.102,
+    "poison_mean": 0.5166,
+    "poison_std": 0.1069
+  },
+  {
+    "topology": "flat",
+    "n_agents": 50,
+    "trust_model": "implicit",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.9928,
+    "poison_std": 0.0053
+  },
+  {
+    "topology": "flat",
+    "n_agents": 50,
+    "trust_model": "capability_scoped",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.864,
+    "poison_std": 0.0194
+  },
+  {
+    "topology": "flat",
+    "n_agents": 50,
+    "trust_model": "zero_trust",
+    "cascade_mean": 0.164,
+    "cascade_std": 0.0408,
+    "poison_mean": 0.0975,
+    "poison_std": 0.0255
+  },
+  {
+    "topology": "flat",
+    "n_agents": 50,
+    "trust_model": "two_of_three",
+    "cascade_mean": 0.892,
+    "cascade_std": 0.0349,
+    "poison_mean": 0.4959,
+    "poison_std": 0.0423
+  },
+  {
+    "topology": "star",
+    "n_agents": 5,
+    "trust_model": "implicit",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.9587,
+    "poison_std": 0.004
+  },
+  {
+    "topology": "star",
+    "n_agents": 5,
+    "trust_model": "capability_scoped",
+    "cascade_mean": 1.0,
+    "cascade_std": 0.0,
+    "poison_mean": 0.9007,
+    "poison_std": 0.0197
+  },
+  {
+    "topology": "star",
+    "n_agents": 5,
+    "trust_model": "zero_trust",
+    "cascade_mean": 0.6,
+    "cascade_std": 0.2191,
+    "poison_mean": 0.55,
+    "poison_std": 0.086
+  },
+  {
+    "topology": "star",
+    "n_agents": 5,
+    "trust_model": "two_of_three",
+    "cascade_mean": 0.88,
+    "cascade_std": 0.16,
+    "poison_mean": 0.7253,
+    "poison_std": 0.1116
+  },
+  {
+    "topology": "star",
+    "n_agents": 10,
+    "trust_model": "implicit",
+    "cascade_mean": 0.98,
+    "cascade_std": 0.04,
+    "poison_mean": 0.9353,
+    "poison_std": 0.0107
+  },
+  {
+    "topology": "star",
+    "n_agents": 10,
+    "trust_model": "capability_scoped",
+    "cascade_mean": 0.98,
+    "cascade_std": 0.04,
+    "poison_mean": 0.8447,
+    "poison_std": 0.0236
+  },
+  {
+    "topology": "star",
+    "n_agents": 10,
+    "trust_model": "zero_trust",
+    "cascade_mean": 0.38,
+    "cascade_std": 0.16,
+    "poison_mean": 0.4907,
+    "poison_std": 0.0401
+  },
+  {
+    "topology": "star",
+    "n_agents": 10,
+    "trust_model": "two_of_three",
+    "cascade_mean": 0.7,
+    "cascade_std": 0.2449,
+    "poison_mean": 0.6673,
+    "poison_std": 0.0838
+  },
+  {
+    "topology": "star",
+    "n_agents": 20,
+    "trust_model": "implicit",
+    "cascade_mean": 0.87,
+    "cascade_std": 0.0245,
+    "poison_mean": 0.9293,
+    "poison_std": 0.0077
+  },
+  {
+    "topology": "star",
+    "n_agents": 20,
+    "trust_model": "capability_scoped",
+    "cascade_mean": 0.66,
+    "cascade_std": 0.1625,
+    "poison_mean": 0.7947,
+    "poison_std": 0.0417
+  },
+  {
+    "topology": "star",
+    "n_agents": 20,
+    "trust_model": "zero_trust",
+    "cascade_mean": 0.19,
+    "cascade_std": 0.0663,
+    "poison_mean": 0.45,
+    "poison_std": 0.0287
+  },
+  {
+    "topology": "star",
+    "n_agents": 20,
+    "trust_model": "two_of_three",
+    "cascade_mean": 0.34,
+    "cascade_std": 0.1158,
+    "poison_mean": 0.5693,
+    "poison_std": 0.0455
+  },
+  {
+    "topology": "star",
+    "n_agents": 50,
+    "trust_model": "implicit",
+    "cascade_mean": 0.568,
+    "cascade_std": 0.0845,
+    "poison_mean": 0.93,
+    "poison_std": 0.0262
+  },
+  {
+    "topology": "star",
+    "n_agents": 50,
+    "trust_model": "capability_scoped",
+    "cascade_mean": 0.268,
+    "cascade_std": 0.0483,
+    "poison_mean": 0.7293,
+    "poison_std": 0.0342
+  },
+  {
+    "topology": "star",
+    "n_agents": 50,
+    "trust_model": "zero_trust",
+    "cascade_mean": 0.076,
+    "cascade_std": 0.0233,
+    "poison_mean": 0.43,
+    "poison_std": 0.018
+  },
+  {
+    "topology": "star",
+    "n_agents": 50,
+    "trust_model": "two_of_three",
+    "cascade_mean": 0.168,
+    "cascade_std": 0.064,
+    "poison_mean": 0.552,
+    "poison_std": 0.0496
+  }
+]

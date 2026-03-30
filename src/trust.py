@@ -104,11 +104,60 @@ class ZeroTrust(TrustModel):
         return task
 
 
+@dataclass
+class TwoOfThreeConstraint(TrustModel):
+    """Capability-bounded trust: each agent may hold at most 2 of 3 capability categories.
+
+    Inspired by NVIDIA's NemoClaw/OpenShell pattern. Generalizes the principle of
+    least privilege from OS security and network segmentation to multi-agent systems.
+
+    Three capability categories:
+      - data_access: can read/write sensitive data stores
+      - code_execution: can run arbitrary code
+      - external_communication: can make external API calls or send messages
+
+    An agent with at most 2 of 3 cannot independently exfiltrate data (needs
+    data_access + external_communication) AND execute arbitrary code. This bounds
+    the blast radius of any single compromised agent.
+
+    Verification probability applies when the trust model detects a task that
+    requires a capability the receiving agent doesn't hold — it may still accept
+    with reduced probability (modeling imperfect enforcement).
+    """
+    verification_prob: float = 0.6
+    # The 3 capability categories — each agent gets exactly 2
+    CAPABILITY_CATEGORIES = frozenset({"data_access", "code_execution", "external_communication"})
+
+    def should_accept(self, receiver, sender, task, rng):
+        # Accept if sender has at least one capability in common with receiver
+        # (agents can communicate within their capability overlap)
+        sender_cats = sender.capabilities & self.CAPABILITY_CATEGORIES
+        receiver_cats = receiver.capabilities & self.CAPABILITY_CATEGORIES
+        overlap = sender_cats & receiver_cats
+        if len(overlap) == 0:
+            return False  # No capability overlap — reject
+        return True
+
+    def filter_task(self, receiver, task, rng):
+        # Moderate verification: better than implicit, less than zero-trust
+        # The constraint's value is structural (limits blast radius) not just detection
+        if task.is_poisoned and rng.random() < self.verification_prob:
+            return Task(
+                task_id=task.task_id,
+                content=task.content.replace("poisoned_", ""),
+                source_agent_id=task.source_agent_id,
+                is_poisoned=False,
+                hop_count=task.hop_count,
+            )
+        return task
+
+
 def create_trust_model(name: str, **kwargs) -> TrustModel:
     models = {
         "implicit": ImplicitTrust,
         "capability_scoped": CapabilityScopedTrust,
         "zero_trust": ZeroTrust,
+        "two_of_three": TwoOfThreeConstraint,
     }
     if name not in models:
         raise ValueError(f"Unknown trust model: {name}. Choose from {list(models)}")

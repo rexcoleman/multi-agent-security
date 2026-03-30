@@ -6,7 +6,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from src.agent import Agent, AgentState, AgentType, Task
 from src.network import AgentNetwork
-from src.trust import ImplicitTrust, ZeroTrust, CapabilityScopedTrust, create_trust_model
+from src.trust import ImplicitTrust, ZeroTrust, CapabilityScopedTrust, TwoOfThreeConstraint, create_trust_model
 from src.attacker import apply_attack
 
 
@@ -148,3 +148,77 @@ class TestAttacker:
         apply_attack(net, "credential_theft", target_id=0)
         # Should have stolen capabilities from neighbors
         assert len(net.agents[0].capabilities) >= original_caps
+
+
+class TestTwoOfThreeConstraint:
+    """Tests for the two-of-three capability constraint trust model (SE-150)."""
+
+    def test_create_two_of_three(self):
+        model = create_trust_model("two_of_three")
+        assert isinstance(model, TwoOfThreeConstraint)
+
+    def test_capability_assignment(self):
+        """Each agent gets exactly 2 of 3 capability categories."""
+        net = AgentNetwork(n_agents=6, trust_model_name="two_of_three", seed=42)
+        categories = {"data_access", "code_execution", "external_communication"}
+        for agent in net.agents.values():
+            agent_cats = agent.capabilities & categories
+            assert len(agent_cats) == 2, f"Agent {agent.agent_id} has {len(agent_cats)} categories: {agent_cats}"
+
+    def test_no_agent_has_all_three(self):
+        """No single agent holds all 3 capability categories."""
+        net = AgentNetwork(n_agents=9, trust_model_name="two_of_three", seed=42)
+        categories = {"data_access", "code_execution", "external_communication"}
+        for agent in net.agents.values():
+            assert not categories.issubset(agent.capabilities), \
+                f"Agent {agent.agent_id} has all 3 categories"
+
+    def test_all_combos_represented(self):
+        """All 3 possible 2-of-3 combinations are assigned across agents."""
+        net = AgentNetwork(n_agents=6, trust_model_name="two_of_three", seed=42)
+        categories = {"data_access", "code_execution", "external_communication"}
+        combos_seen = set()
+        for agent in net.agents.values():
+            combo = frozenset(agent.capabilities & categories)
+            combos_seen.add(combo)
+        assert len(combos_seen) == 3, f"Only {len(combos_seen)} combos represented"
+
+    def test_two_of_three_reduces_cascade_vs_implicit(self):
+        """Two-of-three should reduce cascade compared to implicit trust."""
+        net1 = AgentNetwork(n_agents=5, trust_model_name="implicit", seed=42)
+        apply_attack(net1, "naive", target_id=0)
+        m1 = net1.run_simulation(time_steps=10)
+
+        net2 = AgentNetwork(n_agents=5, trust_model_name="two_of_three", seed=42)
+        apply_attack(net2, "naive", target_id=0)
+        m2 = net2.run_simulation(time_steps=10)
+
+        assert m2.poison_rate <= m1.poison_rate, \
+            f"Two-of-three poison ({m2.poison_rate:.3f}) should be <= implicit ({m1.poison_rate:.3f})"
+
+    def test_two_of_three_between_implicit_and_zero_trust(self):
+        """Two-of-three cascade should fall between implicit and zero-trust."""
+        seeds = [42, 123, 456, 789, 1234]
+        for seed in seeds:
+            m_implicit = _run_sim("implicit", seed)
+            m_two = _run_sim("two_of_three", seed)
+            m_zero = _run_sim("zero_trust", seed)
+
+            # Two-of-three should be between implicit and zero-trust on poison rate
+            # (or equal to either boundary)
+            assert m_zero.poison_rate <= m_two.poison_rate <= m_implicit.poison_rate, \
+                f"Seed {seed}: zero={m_zero.poison_rate:.3f} two={m_two.poison_rate:.3f} implicit={m_implicit.poison_rate:.3f}"
+
+    def test_reproducibility_two_of_three(self):
+        """Same seed produces same results for two-of-three."""
+        m1 = _run_sim("two_of_three", 42)
+        m2 = _run_sim("two_of_three", 42)
+        assert m1.cascade_rate == m2.cascade_rate
+        assert m1.poison_rate == m2.poison_rate
+
+
+def _run_sim(trust_model: str, seed: int, n_agents: int = 5, time_steps: int = 10):
+    """Helper: run a simulation and return metrics."""
+    net = AgentNetwork(n_agents=n_agents, trust_model_name=trust_model, seed=seed)
+    apply_attack(net, "naive", target_id=0)
+    return net.run_simulation(time_steps=time_steps)
