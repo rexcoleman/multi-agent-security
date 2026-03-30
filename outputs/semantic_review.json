@@ -1,9 +1,9 @@
 {
-  "date": "2026-03-30T21:33:40.492881",
+  "date": "2026-03-30T21:45:28.529003",
   "project": "/home/azureuser/multi-agent-security",
   "status": "WARN",
   "fail": 0,
-  "warn": 3,
+  "warn": 2,
   "info": 2,
   "issues": [
     {
@@ -11,38 +11,31 @@
       "severity": "WARN",
       "location": "EXPERIMENTAL_DESIGN.md, Section 6: Ground Truth Audit",
       "detail": "The ground truth data sources are limited to the project's own synthetic testbed and a single prior work (FP-02). There is no mention of using any external, independent datasets to validate the findings.",
-      "suggestion": "Consider including real-world multi-agent incident reports or other external datasets to supplement the synthetic ground truth, even if the coverage is limited. This would help establish that the findings generalize beyond the project's own testbed."
+      "suggestion": "Consider including some real-world multi-agent incident reports or other external datasets to supplement the synthetic ground truth, even if the data is limited. This would help strengthen the external validity of the results."
     },
     {
       "category": "adversary",
       "severity": "WARN",
-      "location": "EXPERIMENTAL_DESIGN.md, Section 4: Pre-Registered Reviewer Kill Shots",
-      "detail": "The adaptive adversary experiment (E4) only considers a defense-aware attacker and a credential-theft attacker. It does not explore a broader range of adaptive adversaries that could potentially defeat the zero-trust defense in more sophisticated ways.",
-      "suggestion": "Expand the adaptive adversary experiment to include a wider variety of attack strategies, such as model-based attacks that exploit weaknesses in the zero-trust verification process, or attacks that target the orchestrator component. This would provide a more comprehensive assessment of the robustness of the zero-trust defense against adaptive adversaries."
+      "location": "FINDINGS.md, Section 'E4: Adaptive Adversary'",
+      "detail": "The 'defense-aware' attacker is able to recover a significant portion (54%) of the advantage provided by the zero-trust defense. This suggests the zero-trust defense may not be as robust as claimed against a sophisticated adversary.",
+      "suggestion": "Expand the adaptive adversary evaluation to include a wider range of attack strategies and techniques. Quantify the robustness of the zero-trust defense against different levels of adversarial knowledge and capability."
     },
     {
       "category": "statistics",
-      "severity": "WARN",
+      "severity": "INFO",
       "location": "EXPERIMENTAL_DESIGN.md, Section 7: Statistical Plan",
-      "detail": "The statistical plan does not mention any power analysis to determine the appropriate number of seeds or experimental runs. The 5 seeds used may not be sufficient to reliably detect the expected effect sizes, especially for the more complex experiments.",
-      "suggestion": "Conduct a power analysis to determine the appropriate number of seeds and experimental runs needed to detect the expected effect sizes with sufficient statistical power (e.g., 80% power). This will help ensure the validity of the statistical conclusions."
+      "detail": "The statistical plan includes appropriate non-parametric tests (bootstrap CI) and multiple comparison correction (Bonferroni). However, the effect size threshold of \u226510pp cascade rate difference between trust models is not strongly justified.",
+      "suggestion": "Consider providing a more detailed rationale for the 10pp effect size threshold, such as referencing prior work, industry standards, or practical significance for the target application domain."
     },
     {
       "category": "placeholder",
       "severity": "INFO",
       "location": "EXPERIMENTAL_DESIGN.md, Section 8: Related Work Checklist",
-      "detail": "The related work checklist is truncated, suggesting that the full list may not be available in the current version of the document.",
-      "suggestion": "Ensure that the full related work checklist is included in the final version of the EXPERIMENTAL_DESIGN.md file."
-    },
-    {
-      "category": "e0_provenance",
-      "severity": "INFO",
-      "location": "FINDINGS.md",
-      "detail": "The FINDINGS.md file does not mention any E0/sanity results, so there is no need to assess the provenance of those inputs.",
-      "suggestion": "None"
+      "detail": "The related work checklist is truncated in the provided text, suggesting the full list may not be available.",
+      "suggestion": "Ensure the full related work checklist is included in the final design document to demonstrate a comprehensive review of the relevant literature."
     }
   ],
   "model": "claude-3-haiku-20240307",
   "input_tokens": 5438,
-  "output_tokens": 758
+  "output_tokens": 654
 }
