@@ -3,7 +3,7 @@ title: "Our Simulation Was Wrong by 37 Percentage Points — What Real LLM Agent
 date: 2026-03-19
 format: technical
 tags: ["ai-security", "multi-agent", "zero-trust", "negative-results", "research"]
-audience_side: "Security OF AI"
+audience_side: "of-ai"
 image_count: 4
 description: "Simulation predicted 97% cascade poison. Real Claude agents: 60%. Topology matters (simulation said it didn't). The simulation-to-real gap changes everything."
 ---
